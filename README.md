@@ -1,3 +1,2 @@
-## Check https://aravindchandradoss.github.io/
+## Check https://aravindchandradoss_blog.github.io/
 
-# aravindchandradoss_blog.github.io
