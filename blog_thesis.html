@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Blog title</title>
+		<title>Thesis</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -40,30 +40,45 @@
 
 						<!-- Post -->
 							<section class="post">
-								<header class="major">
-									<h1>Elements<br />
-									Reference</h1>
-								</header>
 
 								<!-- Text stuff -->
-									<h2>Text</h2>
-									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
-									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
-									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>.
-									Finally, this is a <a href="#">link</a>.</p>
-									<hr />
-									<h2>Heading Level 2</h2>
-									<h3>Heading Level 3</h3>
-									<h4>Heading Level 4</h4>
-									<h5>Heading Level 5</h5>
-									<h6>Heading Level 6</h6>
+									<h2>Autonomous driving with just a Camera and a route planner</h2>
+									<p>&emsp; In this work, I addressed the Autonomous Driving in a slightly peculiar way, in a more <i>human-centric fashion,</i> such that one can clone human-driving behavior by dividing the overall pipeline into <i>data-based</i> and <i>math-based</i> blocks! In other words, I tried to identify a <i>'sweet-spot'</i> for spliting the <i>end-to-end</i> pipeline and also to reason on the trade-offs between <i>data-based</i> and <i>math-based</i> techniques. Besides, I put emphasis on using minimal and cheap sensors!</p>
 									<hr />
 									<header>
-										<h2>Heading with a Subtitle</h2>
-										<p>Lorem ipsum dolor sit amet nullam id egestas urna aliquam</p>
+									<h2>What...</h2>
 									</header>
-									<p>Nunc lacinia ante nunc ac lnia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit tempus accumsan.</p>
-									
+									<p> &emsp; The overall idea is to explore Imitation Learning in an End-to-Mid fashion, in particular, on predicting desired waypoints using only camera and route planner (basic map) images and then on executing those waypoints using a dedicated control. The intuition behind this apporach will be explained in a bit. Here, the notion is to combine the perception and planning step together (i.e. to predict the waypoints directly from the vision -- similar to human-driving). Since, this work is inspired from human driving, no sophisiticated sensors such as Lidar or HD maps were used. Only a camera and basic maps were used to match the human driving.</p>
+									<hr/>
+									<header>
+									<h2>A little background...</h2>
+									<p> &emsp; Just to get the intuition, imagine for some random reason, you want to travel between some random places, for instance say that you want to travel from your house to your friends house. Most probabily you would first get into your car and put the destination on your phone and then we would simply drive just by looking at the things on &amp off the road and obviously according to your phone's navigation as well. Isn't it?</p>
+
+									</header>
+
+									<blockquote>To put things firmly, we humans use <strong> our vision to 'drive' </strong> and a <strong> map to 'navigate' </strong> <br/> We humans do not use any sophisticated sensor such as Lidar, HD maps, Radars...  </blockquote>
+									<p> &emsp; With that said, now lets move ahead and build intuitions on <b> why should we predict the waypoints?</b> why not just detect all the needed objects (such as vehicles, pedestrians, lane marking, traffic light...) and then put them in some occupancy grid and further work on it -- a.k.a <i>Modular-pipeline</i> approach? or why not just directly map the raw inputs to the outputs -- a.k.a <i>End-to-End</i> approach? I acknowledge that various other approaches exists and I'm mentioning these two based on the research density</p> 
+									<blockquote> Although, the above mentioned approaches are promising, they have their drawbacks because of the very nature of their architecture. One can mitigate this by identifying a spot in between these two extremes such that we can combine the benifits of the both apporaches a.k.a End-to-Mid learning approach. However, <b> the question is where is that 'mid'? </b> Coz, one can break the End-to-End pipeline in various ways. <b> Voila! that is what this study is all about. </b> For this I mainly used intuitions from human-driving and reframed the autonomous driving problem, i guess, in a more human-like manner. Also by utilizing the well-established math-based techniques for certain parts in the pipeline.</blockquote>
+									<p>&emsp; To get a sense, imagine that you are driving a car and you see the below image... </p>
+									<span class="image fit"><img src="images/thesis_camera.png" alt="" /></span>
+									<p> &emsp; Current trend is to detect and place all the objects in an occupancy grid and then plan a suitable maneuver/trajector that needs to be taken (as in below figure) </p>
+									<span class="image fit"><img src="images/thesis_detection.png" alt="" /></span>
+									<span class="image fit"><img src="images/thesis_detectionNwaypoint.png" alt="" /></span>
+									<p> &emsp; <b> Is it human-like diving? </b> I would say <i> No. </i> If we take a moment and ponder, one can grasp the fact that we <i> do not 'intentionally' </i> searching for vehicles, pedestrians, traffic signs. We take the image a single input and process it to get our final maneuver. Isn't it? Something similar to below image. </p>
+									<span class="image fit"><img src="images/thesis_waypoint.png" alt="" /></span>
+									<p> &emsp; I do agree that we have to take account of other vehicles, pedestrians... But we detect them in a more subtle way, isn't it? To convince yourself, ask youself whether would you detect those objects <i>'intentionally' </i> every single time? For instance, look the following images. </p>
+									<span class="image fit"><img src="images/thesis_car_1.png" alt="" /></span>
+									<p> &emsp; <b> Did you <i> 'intentionally' </i> search for others vehicles? or pedestrian? or traffic signs? </b> or you simply ended up visualizing something like in the below image. </p>
+									<span class="image fit"><img src="images/thesis_car_2.png" alt="" /></span>
+									<blockquote> &emsp; It is not that we do not have to detect those object, it is more like, we humans are doing it implicitly (similar to hidden layer in neural networks). The other reason is that, we can greatly reduce the dimension of network's output space (rather than predicting thousands of states). Indication that we can reduce the burden of our optimization (machine learning) algorithms. Also that we don't have to make predictions on states that would rarely happen on every single inferences. <br/> &emsp; Besides, we can complete the pipeline with a well-established techniques (for vehicle control) to execute those predicted waypoints. </blockquote>
+									<hr />
+									<h2>Why camera and map?</h2>
+									<p> &emsp; I believe it is intuitively reasonable why they go together and why they would fail when used stand-alone! For example, consider you are using only the camera, in that case, there will be no information for the network to take the decision in the road intersections. On the other hand, if we use only the map, we would not have information about other vehicles, pedestrians or traffic lights to take appropriate actions. Besides, the map would provide only the <i>'spatial' waypoints</i>, however, we need <i>'temporal' waypoints</i> to navigate. Additionally sometimes, we might need to intentionally deviate from those spatial waypoints (from map). For example, imagine some random car is parked partially on the side of the road, in that case, we would normally nudge to the other side while crossing that parked car, right? (i.e. intentionally we are deviating from the spatial waypoints). With that said, we would combine these two sensors to match human-driving. </p>
+									<hr/>
+
+
+									<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit tempus accumsan.</p>
+
 									<hr />
 
 								<!-- Lists -->
@@ -192,27 +207,25 @@ print 'It took ' + i + ' iterations to sort the deck.';
 
 							</section>
 
-						<h2>Disqus *****</h2>
-						<div id="disqus_thread"></div>
-						<script>
+							<div id="disqus_thread"></div>
+							<script>
 
-						/**
-						*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-						*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-						
-						var disqus_config = function () {
-						this.page.url = //'https://aravindchandradoss.github.io/blog/blog_temp.html';  // Replace PAGE_URL with your page's canonical URL variable
-						this.page.identifier = //'https://aravindchandradoss.github.io/blog/blog_temp.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-						};
-						(function() { // DON'T EDIT BELOW THIS LINE
-						var d = document, s = d.createElement('script');
-						s.src = 'https://aravinds-blog.disqus.com/embed.js';
-						s.setAttribute('data-timestamp', +new Date());
-						(d.head || d.body).appendChild(s);
-						})();
-						</script>
-						<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>                      
-					
+							/**
+							*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+							*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+							var disqus_config = function () {
+							this.page.url = 'https://aravindchandradoss.github.io/blog/blog_thesis.html';  // Replace PAGE_URL with your page's canonical URL variable
+							this.page.identifier = 'https://aravindchandradoss.github.io/blog/blog_thesis.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+							};
+							(function() { // DON'T EDIT BELOW THIS LINE
+							var d = document, s = d.createElement('script');
+							s.src = 'https://aravinds-blog.disqus.com/embed.js';
+							s.setAttribute('data-timestamp', +new Date());
+							(d.head || d.body).appendChild(s);
+							})();
+							</script>
+							<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+							       
 
 					</div>
 
@@ -259,4 +272,3 @@ print 'It took ' + i + ' iterations to sort the deck.';
 
 	</body>
 </html>
-
