@@ -75,135 +75,53 @@
 									<h2>Why camera and map?</h2>
 									<p> &emsp; I believe it is intuitively reasonable why they go together and why they would fail when used stand-alone! For example, consider you are using only the camera, in that case, there will be no information for the network to take the decision in the road intersections. On the other hand, if we use only the map, we would not have information about other vehicles, pedestrians or traffic lights to take appropriate actions. Besides, the map would provide only the <i>'spatial' waypoints</i>, however, we need <i>'temporal' waypoints</i> to navigate. Additionally sometimes, we might need to intentionally deviate from those spatial waypoints (from map). For example, imagine some random car is parked partially on the side of the road, in that case, we would normally nudge to the other side while crossing that parked car, right? (i.e. intentionally we are deviating from the spatial waypoints). With that said, we would combine these two sensors to match human-driving. </p>
 									<hr/>
-
-
-									<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit tempus accumsan.</p>
-
-									<hr />
-
-								<!-- Lists -->
-									<h2>Lists</h2>
-									<div class="row">
-										<div class="col-6 col-12-small">
-
-											<h3>Unordered</h3>
-											<ul>
-												<li>Dolor pulvinar etiam.</li>
-												<li>Sagittis lorem eleifend.</li>
-												<li>Felis feugiat dolore viverra.</li>
-												<li>Dolor pulvinar etiam.</li>
-											</ul>
-
-											<h3>Alternate</h3>
-											<ul class="alt">
-												<li>Dolor pulvinar etiam etiam.</li>
-												<li>Sagittis adipiscing eleifend.</li>
-												<li>Felis enim dolore viverra.</li>
-												<li>Dolor pulvinar etiam etiam.</li>
-											</ul>
-
-										</div>
-										<div class="col-6 col-12-small">
-
-											<h3>Ordered</h3>
-											<ol>
-												<li>Dolor pulvinar etiam.</li>
-												<li>Etiam vel felis at viverra.</li>
-												<li>Felis enim feugiat magna.</li>
-												<li>Etiam vel felis nullam.</li>
-												<li>Felis enim et tempus.</li>
-											</ol>
-
-											<h3>Icons</h3>
-											<ul class="icons">
-												<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-												<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-												<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-												<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-												<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-											</ul>
-											<ul class="icons alt">
-												<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-												<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-												<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-												<li><a href="#" class="icon brands alt fa-github"><span class="label">Github</span></a></li>
-												<li><a href="#" class="icon brands alt fa-dribbble"><span class="label">Dribbble</span></a></li>
-											</ul>
-
-										</div>
-									</div>
-									<h3>Definition</h3>
-									<dl>
-										<dt>Item 1</dt>
-										<dd>
-											<p>Lorem r ac pellentesque praesent.</p>
-										</dd>
-										<dt>Item 2</dt>
-										<dd>
-											<p>Lorem aesent.</p>
-										</dd>
-										<dt>Item 3</dt>
-										<dd>
-											<p>Lorem ipent.</p>
-										</dd>
-									</dl>
-
+									<h2>Camparison to real world...</h2>
+									<p> &emsp; Since I used simulator <a href="http://carla.org/" target="_blank">(Carla)</a> for this study, I wanted it to be as close to reality as possible. Here is the visualization between the simulation and real-world, </p>
 									
-								<!-- Blockquote -->
-									<h2>Blockquote</h2>
-									<blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis.</blockquote>
+									<span class="image fit"><img src="images/thesis_simcar.png" alt="" /></span>
 
+									<span class="image fit"><img src="images/thesis_simmap.png" alt="" /></span>
+									<p> &emsp; To emulated the Google/Apple map, we used the ground truth data from the simulator (roads and intented route). the <i>blue-line</i> in GoogleMap (intended route) is emulated as a <i>pink-line</i> in the simulated map.</p>
+									
 									<hr />
+									<h2>Network architecture... </h2>
+									<p> &emsp; The overall idea is to get high-level features from Camera and Map images using ConvNet and then to fuse them to predict the desired waypoint.</p>
+									<span class="image fit"><img src="images/thesis_network_arch.png" alt="" /></span>
+									
+									<p> &emsp; <i>Note:</i> in the above image, the output predictions were overlayed on top of the map for visualization purpose, in reality only those white dots are predicted.</p>
+									<blockquote> &emsp; I'm trying to predict the 'desired temporal waypoints' (i.e. where I should be after 1 sec, 2 sec...) Once we have such waypoints, we can interpolate them to find the needed steering (from the curvature) and throttle (from spacing between waypoints) </blockquote>
+									<p> &emsp; For training, we used the collected ground truth data (i.e. actual location of ego) by time-shifting them to get the targets labels.</p>
+									<blockquote> &emsp; We have to notice that because of high correlation between input map and output predictions, during training, the network might get stuck at optimal point which could give more weitage to the input map than the camera image. In order to remove this undesirable correlation, I added a decaying probability (w.r.t epoch) to the input map (i.e only certain training samples will have the map data). This pushed the network a optimal point that gave weitage to both map and camera images. </blockquote>
+									<hr/>
+									<h2>Results... </h2>
+									<p> &emsp; The major objectives are to,</p>
+										<ul>
+											<li>lane Keep (driving straight, as well as, corners) </li>
+											<li>turning at intersection (based on the map)</li>
+											<li>obeying traffic light</li>
+											<li>avoid collision with pedestrian</li>
+										</ul>
+									
+									<h3> &emsp; Lane keeping and intersection... </h3>
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/oxTNgYJD3jI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									<blockquote> &emsp; We can see that the ego is able to drive straight, turn, and also handle intersection based on the map. If we notice the spacing between waypoints, they would get slighly closer when approaching a turn, indicating that ego vehicle has to slow down. (benefits of imitation learning!) </blockquote>
 
-								
+									<h3> &emsp; traffic light... </h3>
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/2NXBRVyQPik" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									<p> &emsp; Note: The <i>green line</i> represent the length of the waypoint (and used as a base for comparison)  </p>
+									<blockquote> &emsp; We can see that waypoints get cluttered to a single point, indicating the ego has to stay in the same location (i.e. stop). </blockquote>
 
-								<!-- Image -->
-									<h2>Image</h2>
+									<h3> &emsp; Pedestrian... </h3>
+									<iframe width="560" height="315" src="https://www.youtube.com/embed/pBv6og9I9IA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									<blockquote> &emsp; The ego was able to slow-down as well as stop based on the situation. </blockquote>
+									<hr/>
+									<h2> Thesis & References... </h2>
+									<p> &emsp; For more details, check <a href="https://drive.google.com/open?id=1HQBVoeSThhrTq7IelON_K19lkDx2hfyh" target="_blank">here.</a> <br/> &emsp; Also, feel free to use dicussion section below.  </p> 
+									<hr/>
 
-									<h3>Fit</h3>
-									<span class="image fit"><img src="images/pic01.jpg" alt="" /></span>
-									<div class="box alt">
-										<div class="row gtr-50 gtr-uniform">
-											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic04.jpg" alt="" /></span></div>
-											<!-- Break -->
-											<div class="col-4"><span class="image fit"><img src="images/pic04.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-											<!-- Break -->
-											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic04.jpg" alt="" /></span></div>
-											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-										</div>
-									</div>
+									<h2> ... </h2>
 
-									<h3>Left &amp; Right</h3>
-									<p><span class="image left"><img src="images/pic08.jpg" alt="" /></span>Lorem ipsum dolor sit accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Vestibulum ante ipsum primis in faucibus magna blandit adipiscing eu felis iaculis.</p>
-									<p><span class="image right"><img src="images/pic09.jpg" alt="" /></span>Lorem ipsum dolor sit accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Vestibulum ante ipsum primis in faucibus magna blandit adipiscing eu felis iaculis.</p>
-
-									<hr />
-
-								<!-- Box -->
-									<h2>Box</h2>
-									<div class="box">
-										<p>Felis sagittis eget tempus primis integer ac pellentesque praesent. Vestibulum ante ipsum primis in faucibus magna blandit adipiscing eu felis iaculis volutpat lorem ipsum dolor.</p>
-									</div>
-
-									<hr />
-
-								<!-- Preformatted Code -->
-									<h2>Preformatted</h2>
-									<pre><code>i = 0;
-
-while (!deck.isInOrder()) {
-    print 'Iteration ' + i;
-    deck.shuffle();
-    i++;
-}
-
-print 'It took ' + i + ' iterations to sort the deck.';
-</code></pre>
+									<blockquote> &emsp; My next work study be on sequential learning and attentions... again trying out things in more human-like fashion... </blockquote>
 
 							</section>
 
@@ -272,3 +190,9 @@ print 'It took ' + i + ' iterations to sort the deck.';
 
 	</body>
 </html>
+<!-- 
+
+Link NEW page
+<a href="http://carla.org/" target="_blank">(Carla)</a> 
+
+-->
