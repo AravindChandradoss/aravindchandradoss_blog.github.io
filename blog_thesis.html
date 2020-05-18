@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Thesis</title>
+		<title> Thesis - Autonomous Driving</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -43,94 +43,87 @@
 
 								<!-- Text stuff -->
 									<h2>Autonomous driving with just a Camera and a route planner</h2>
-									<p>&emsp; In this work, I addressed the Autonomous Driving in a slightly peculiar way, in a more <i>human-centric fashion,</i> such that one can clone human-driving behavior by dividing the overall pipeline into <i>data-based</i> and <i>math-based</i> blocks! In other words, I tried to identify a <i>'sweet-spot'</i> for spliting the <i>end-to-end</i> pipeline and also to reason on the trade-offs between <i>data-based</i> and <i>math-based</i> techniques. Besides, I put emphasis on using minimal and cheap sensors!</p>
+									<p>&emsp; In this work, I addressed the Autonomous Driving in a slightly peculiar way, in a more <i>human-centric fashion,</i> such that one can clone human-driving behavior by dividing the overall pipeline into <i>data-based</i> and <i>math-based</i> blocks! In other words, I tried to identify a <i>'sweet-spot'</i> for splitting the <i>end-to-end</i> pipeline and also to reason on the trade-offs between <i>data-based</i> and <i>math-based</i> techniques. Besides, I put emphasis on using minimal and cheap sensors!</p>
 									<hr />
 									<header>
 									<h2>What...</h2>
 									</header>
-									<p> &emsp; The overall idea is to explore Imitation Learning in an End-to-Mid fashion, in particular, on predicting desired waypoints using only camera and route planner (basic map) images and then on executing those waypoints using a dedicated control. The intuition behind this apporach will be explained in a bit. Here, the notion is to combine the perception and planning step together (i.e. to predict the waypoints directly from the vision -- similar to human-driving). Since, this work is inspired from human driving, no sophisiticated sensors such as Lidar or HD maps were used. Only a camera and basic maps were used to match the human driving.</p>
+									<p> &emsp; The overall idea is to explore Imitation Learning in an End-to-Mid fashion, in particular, on predicting desired waypoints using only camera and route planner (basic map) images and then on executing those waypoints using a dedicated control. The intuition behind this approach will be explained in a bit. Here, the notion is to combine the perception and planning step together (i.e. to predict the waypoints directly from the vision -- similar to human-driving). Since, this work is inspired from human driving, no sophisticated sensors such as Lidar or HD maps were used. Only a camera and basic maps were used to match human driving.</p>
 									<hr/>
 									<header>
 									<h2>A little background...</h2>
-									<p> &emsp; Just to get the intuition, imagine for some random reason, you want to travel between some random places, for instance say that you want to travel from your house to your friends house. Most probabily you would first get into your car and put the destination on your phone and then we would simply drive just by looking at the things on &amp off the road and obviously according to your phone's navigation as well. Isn't it?</p>
-
+									<p> &emsp; Just to get the intuition, imagine for some random reason, you want to travel between some random places, for instance, say that you want to travel from your house to your friends' house. Most probably you would first get into your car and put the destination on your phone and then we would simply drive just by looking at the things on &amp off the road and obviously according to your phone's navigation as well. Isn't it?</p>
 									</header>
-
 									<blockquote>To put things firmly, we humans use <strong> our vision to 'drive' </strong> and a <strong> map to 'navigate' </strong> <br/> We humans do not use any sophisticated sensor such as Lidar, HD maps, Radars...  </blockquote>
-									<p> &emsp; With that said, now lets move ahead and build intuitions on <b> why should we predict the waypoints?</b> why not just detect all the needed objects (such as vehicles, pedestrians, lane marking, traffic light...) and then put them in some occupancy grid and further work on it -- a.k.a <i>Modular-pipeline</i> approach? or why not just directly map the raw inputs to the outputs -- a.k.a <i>End-to-End</i> approach? I acknowledge that various other approaches exists and I'm mentioning these two based on the research density</p> 
-									<blockquote> Although, the above mentioned approaches are promising, they have their drawbacks because of the very nature of their architecture. One can mitigate this by identifying a spot in between these two extremes such that we can combine the benifits of the both apporaches a.k.a End-to-Mid learning approach. However, <b> the question is where is that 'mid'? </b> Coz, one can break the End-to-End pipeline in various ways. <b> Voila! that is what this study is all about. </b> For this I mainly used intuitions from human-driving and reframed the autonomous driving problem, i guess, in a more human-like manner. Also by utilizing the well-established math-based techniques for certain parts in the pipeline.</blockquote>
+									<p> &emsp; With that said, now lets move ahead and build intuitions on <b> why should we predict the waypoints?</b> why not just detect all the needed objects (such as vehicles, pedestrians, lane marking, traffic light...) and then put them in some occupancy grid and further work on it -- a.k.a <i>Modular-pipeline</i> approach? or why not just directly map the raw inputs to the outputs -- a.k.a <i>End-to-End</i> approach? I acknowledge that various other approaches exist and I'm mentioning these two based on the research density</p> 
+									<blockquote> Although, the above mentioned approaches are promising, they have their drawbacks because of the very nature of their architecture. One can mitigate this by identifying a spot in between these two extremes such that we can combine the benefits of both approaches a.k.a End-to-Mid learning approach. However, <b> the question is where is that 'mid'? </b> Coz, one can break the End-to-End pipeline in various ways. <b> Voila! that is what this study is all about. </b> For this I mainly used intuitions from human-driving and reframed the autonomous driving problem, I guess, in a more human-like manner. Also by utilizing the well-established math-based techniques for certain parts in the pipeline.</blockquote>
 									<p>&emsp; To get a sense, imagine that you are driving a car and you see the below image... </p>
 									<span class="image fit"><img src="images/thesis_camera.png" alt="" /></span>
 									<p> &emsp; Current trend is to detect and place all the objects in an occupancy grid and then plan a suitable maneuver/trajector that needs to be taken (as in below figure) </p>
 									<span class="image fit"><img src="images/thesis_detection.png" alt="" /></span>
 									<span class="image fit"><img src="images/thesis_detectionNwaypoint.png" alt="" /></span>
-									<p> &emsp; <b> Is it human-like diving? </b> I would say <i> No. </i> If we take a moment and ponder, one can grasp the fact that we <i> do not 'intentionally' </i> searching for vehicles, pedestrians, traffic signs. We take the image a single input and process it to get our final maneuver. Isn't it? Something similar to below image. </p>
+
+									<p> &emsp; <b> Is it human-like diving? </b> I would say <i> No. </i> If we take a moment and ponder, one can grasp the fact that we <i>do not 'intentionally' </i> searching for vehicles, pedestrians, traffic signs. We take the image a single input and process it to get our final maneuver. Isn't it? Something similar to the below image. </p>
 									<span class="image fit"><img src="images/thesis_waypoint.png" alt="" /></span>
-									<p> &emsp; I do agree that we have to take account of other vehicles, pedestrians... But we detect them in a more subtle way, isn't it? To convince yourself, ask youself whether would you detect those objects <i>'intentionally' </i> every single time? For instance, look the following images. </p>
+									<p> &emsp; I do agree that we have to take account of other vehicles, pedestrians... But we detect them in a more subtle way, isn't it? To convince yourself, ask yourself whether would you detect those objects <i>'intentionally' </i> every single time? For instance, look at the following images. </p>
 									<span class="image fit"><img src="images/thesis_car_1.png" alt="" /></span>
-									<p> &emsp; <b> Did you <i> 'intentionally' </i> search for others vehicles? or pedestrian? or traffic signs? </b> or you simply ended up visualizing something like in the below image. </p>
+									<p> &emsp; <b> Did you <i> 'intentionally' </i> search for other vehicles? or pedestrian? or traffic signs? </b> or you simply ended up visualizing something like in the below image. </p>
 									<span class="image fit"><img src="images/thesis_car_2.png" alt="" /></span>
-									<blockquote> &emsp; It is not that we do not have to detect those object, it is more like, we humans are doing it implicitly (similar to hidden layer in neural networks). The other reason is that, we can greatly reduce the dimension of network's output space (rather than predicting thousands of states). Indication that we can reduce the burden of our optimization (machine learning) algorithms. Also that we don't have to make predictions on states that would rarely happen on every single inferences. <br/> &emsp; Besides, we can complete the pipeline with a well-established techniques (for vehicle control) to execute those predicted waypoints. </blockquote>
+									<blockquote> &emsp; It is not that we do not have to detect those objects, it is more like, we humans are doing it implicitly (similar to hidden layer in neural networks). The other reason is that, we can greatly reduce the dimension of our network's output space (rather than predicting thousands of states). Indicating that we can reduce the burden of our optimization (machine learning) algorithms. Also that we don't have to make predictions on states that would rarely happen on every single inference. <br/> &emsp; Besides, we can complete the pipeline with well-established techniques (for vehicle control) to execute those predicted waypoints. </blockquote>
 									<hr />
+
 									<h2>Why camera and map?</h2>
 									<p> &emsp; I believe it is intuitively reasonable why they go together and why they would fail when used stand-alone! For example, consider you are using only the camera, in that case, there will be no information for the network to take the decision in the road intersections. On the other hand, if we use only the map, we would not have information about other vehicles, pedestrians or traffic lights to take appropriate actions. Besides, the map would provide only the <i>'spatial' waypoints</i>, however, we need <i>'temporal' waypoints</i> to navigate. Additionally sometimes, we might need to intentionally deviate from those spatial waypoints (from map). For example, imagine some random car is parked partially on the side of the road, in that case, we would normally nudge to the other side while crossing that parked car, right? (i.e. intentionally we are deviating from the spatial waypoints). With that said, we would combine these two sensors to match human-driving. </p>
 									<hr/>
+
 									<h2>Camparison to real world...</h2>
 									<p> &emsp; Since I used simulator <a href="http://carla.org/" target="_blank">(Carla)</a> for this study, I wanted it to be as close to reality as possible. Here is the visualization between the simulation and real-world, </p>
-									
 									<span class="image fit"><img src="images/thesis_simcar.png" alt="" /></span>
-
 									<span class="image fit"><img src="images/thesis_simmap.png" alt="" /></span>
-									<p> &emsp; To emulated the Google/Apple map, we used the ground truth data from the simulator (roads and intented route). the <i>blue-line</i> in GoogleMap (intended route) is emulated as a <i>pink-line</i> in the simulated map.</p>
-									
+									<p> &emsp; To emulated the Google/Apple map, we used the ground truth data from the simulator (roads and intended route). the <i>blue-line</i> in GoogleMap (intended route) is emulated as a <i>pink-line</i> in the simulated map.</p>
 									<hr />
+
 									<h2>Network architecture... </h2>
 									<p> &emsp; The overall idea is to get high-level features from Camera and Map images using ConvNet and then to fuse them to predict the desired waypoint.</p>
 									<span class="image fit"><img src="images/thesis_network_arch.png" alt="" /></span>
 									
-									<p> &emsp; <i>Note:</i> in the above image, the output predictions were overlayed on top of the map for visualization purpose, in reality only those white dots are predicted.</p>
-									<blockquote> &emsp; I'm trying to predict the 'desired temporal waypoints' (i.e. where I should be after 1 sec, 2 sec...) Once we have such waypoints, we can interpolate them to find the needed steering (from the curvature) and throttle (from spacing between waypoints) </blockquote>
-									<p> &emsp; For training, we used the collected ground truth data (i.e. actual location of ego) by time-shifting them to get the targets labels.</p>
-									<blockquote> &emsp; We have to notice that because of high correlation between input map and output predictions, during training, the network might get stuck at optimal point which could give more weitage to the input map than the camera image. In order to remove this undesirable correlation, I added a decaying probability (w.r.t epoch) to the input map (i.e only certain training samples will have the map data). This pushed the network a optimal point that gave weitage to both map and camera images. </blockquote>
+									<p> &emsp; <i>Note:</i> in the above image, the output predictions were overlayed on top of the map for visualization purposes, in reality only those white dots are predicted.</p>
+									<blockquote> &emsp; I'm trying to predict the 'desired temporal waypoints' (i.e. where I should be after 1 sec, 2 sec...) Once we have such waypoints, we can interpolate them to find the needed steering (from the curvature) and throttle (from the spacing between waypoints) </blockquote>
+									<p> &emsp; For training, we used the collected ground truth data (i.e. actual location of ego) by time-shifting them to get the target labels.</p>
+									<blockquote> &emsp; We have to notice that because of the high correlation between input map and output predictions, during training, the network might get stuck at an optimal point which could give more weightage to the input map than the camera image. In order to remove this undesirable correlation, I added a decaying probability (w.r.t epoch) to the input map (i.e only certain training samples will have the map data). This pushed the network an optimal point that gave weightage to both map and camera images. </blockquote>
 									<hr/>
+
 									<h2>Results... </h2>
 									<p> &emsp; The major objectives are to,</p>
 										<ul>
 											<li>lane Keep (driving straight, as well as, corners) </li>
-											<li>turning at intersection (based on the map)</li>
-											<li>obeying traffic light</li>
-											<li>avoid collision with pedestrian</li>
+											<li>turning at intersections (based on the map)</li>
+											<li>obeying traffic lights</li>
+											<li>avoid collision with pedestrians</li>
 										</ul>
-									
 									<h3> &emsp; Lane keeping and intersection... </h3>
 									<iframe width="560" height="315" src="https://www.youtube.com/embed/oxTNgYJD3jI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-									<blockquote> &emsp; We can see that the ego is able to drive straight, turn, and also handle intersection based on the map. If we notice the spacing between waypoints, they would get slighly closer when approaching a turn, indicating that ego vehicle has to slow down. (benefits of imitation learning!) </blockquote>
-
+									<blockquote> &emsp; We can see that the ego is able to drive straight, turn, and also handle intersection based on the map. If we notice the spacing between waypoints, they would get slightly closer when approaching a turn, indicating that the ego vehicle has to slow down. (benefits of imitation learning!) </blockquote>
 									<h3> &emsp; traffic light... </h3>
 									<iframe width="560" height="315" src="https://www.youtube.com/embed/2NXBRVyQPik" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-									<p> &emsp; Note: The <i>green line</i> represent the length of the waypoint (and used as a base for comparison)  </p>
+									<p> &emsp; Note: The <i>green line</i> represents the length of the waypoint (and used as a base for comparison)  </p>
 									<blockquote> &emsp; We can see that waypoints get cluttered to a single point, indicating the ego has to stay in the same location (i.e. stop). </blockquote>
-
 									<h3> &emsp; Pedestrian... </h3>
 									<iframe width="560" height="315" src="https://www.youtube.com/embed/pBv6og9I9IA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 									<blockquote> &emsp; The ego was able to slow-down as well as stop based on the situation. </blockquote>
 									<hr/>
+
 									<h2> Thesis & References... </h2>
-									<p> &emsp; For more details, check <a href="https://drive.google.com/file/d/1SH2aDMyJHzcgmtbqNJtgwL2Luq6GgYOD/view?usp=sharing" target="_blank">Abstract</a> and <a href="https://drive.google.com/open?id=1HQBVoeSThhrTq7IelON_K19lkDx2hfyh" target="_blank">Full thesis</a> <br/> &emsp; Also, feel free to use dicussion section below.  </p> 
+									<p> &emsp; For more details, check <a href="https://drive.google.com/file/d/1SH2aDMyJHzcgmtbqNJtgwL2Luq6GgYOD/view?usp=sharing" target="_blank">Abstract</a> and <a href="https://drive.google.com/open?id=1HQBVoeSThhrTq7IelON_K19lkDx2hfyh" target="_blank">Full thesis</a> <br/> &emsp; Also, feel free to use the discussion section below.  </p> 
 									<hr/>
 
 									<h2> ... </h2>
-
-									<blockquote> &emsp; My next work study be on sequential learning and attentions... again trying out things in more human-like fashion... </blockquote>
+									<blockquote> &emsp; My next work study will be on sequential learning and attention... again trying out things in more human-like fashion... </blockquote>
 
 							</section>
 
 							<div id="disqus_thread"></div>
 							<script>
-
-							/**
-							*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-							*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 							var disqus_config = function () {
 							this.page.url = 'https://aravindchandradoss.github.io/blog/blog_thesis.html';  // Replace PAGE_URL with your page's canonical URL variable
 							this.page.identifier = 'https://aravindchandradoss.github.io/blog/blog_thesis.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
