@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title> Stability </title>
+		<title> Eigen vectors </title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -25,6 +25,7 @@
 				<!-- Nav -->
 					<nav id="nav">
 						<ul class="links">
+							<!-- <li><a href="index.html">This is Massively</a></li> -->
 							<li><a href="about_me.html">About Me</a></li>
 							<li class="active"><a href="index.html">Blog</a></li>
 						</ul>
@@ -41,14 +42,28 @@
 							<section class="post">
 								<!-- Text stuff -->
 
-									<h2> What is stability? </h2>
-									<p> &emsp; Well, there is no straight forward answer to that question. In fact, it depend on how you define stability in the first place. To give you a taste, I will you tell some of the stability I know. </p>
-									
+									<h2> What are eigen vectors? why are they so hyped? </h2>
+									<p> &emsp; I am doing a compilation of things I found amusing in Controls Systems (well, mathematics in general). So, I'm covering the pre-req for that! This is about eigen vectors and why are they so important in linear algebra!</p>
+									<h2> Eigen vectors </h2>
+									<p> &emsp; We all know that what every x that satisfies the equation (A-lI)x = 0, (i.e. Ax = lx), where A is... blah blah blah... I will get back to this...</p>
 									<hr />
 
-									<header>
-										<h2 style="text-align:center"> heading </h2>
-										<p> &emsp; ===== </p>
+									<h2> A little background... </h2>
+									<p> &emsp; You know the drill, first let's see some basic stuffs and convince ourself why that is the case... and then let's move forward... </p>
+		
+
+									<blockquote> 
+										&emsp; For some random reason, assume you have a cuboid. and if I ask you the <b>volume</b> of that cuboid you would <b>mulitple it's lenght(l), breath(b) and height(h)</b>, right? To be precise, let's say l = 2 m, b = 3 m, h = 4 m, then its volume should be 24 m<sup>3</sup>. Very simple, isn't it? <br/> 
+										&emsp; Now to spice things up, let's do some tranformation to our cuboid. For instance, say, you are expanding it by 2 times along its length. if I ask you the volume, you say 48 m<sup>3</sup> (i.e. (2*l)*b*h = (2*2)*3*4 = 48). Yes, the answer is correct, by why that is the case? why increasing its length didn't affect its breath or its height, and why was it proportional? <br/> 
+
+										&emsp; to, it's length by 2. lenth by 2 time, breth by 2 time, and hight by 3 time. if i ask you the volume now, you will mulitply 2 times L * 2* times B and 3 times H.. whihc will be 12 times the inital cuboid. it is right! But, who told you that lenth breath height are linear independ? why if i incraese the lenth by 2 time, it is not effecting the other parameters? why? have you ever wondered? they are nothing but eigen vectors. the length, breth and hight. How exactly? here, if you have had noticed, the vectors representing L,B,H before and after transformation were pointing the same direction. all other vectors, take this vector, it will here after the transformation, which is clearly not in the same direction. take these vector separately, all other here... this is junk. they change their direction and magnitude, it will be tedious in if i move to higher dimention. now take these three vectors. they do not change therir diection, I have to find only the magnitude. they are linear independent. i can find how my cuboid will be if i know just these three vectors. The speciality is that, they not change their direction.
+
+									To sum up, eigen vector are the vectors with special propery, here, it is the directionality. They does not change direction after tranformation. So you dont have to consider all the vectors.  </blockquote>
+									
+
+									<header class="major">
+									<h2 style="text-align:center"> heading </h2>
+									<p> &emsp; ===== </p>
 									</header>
 									<blockquote> &emsp; === </blockquote>
 									<a href="#"> === </a>

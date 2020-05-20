@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title> Sliding Mode Control </title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="about_me.html" class="logo">Aravind Chandradoss</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<!-- <li><a href="index.html">This is Massively</a></li> -->
+							<li><a href="about_me.html">About Me</a></li>
+							<li class="active"><a href="index.html">Blog</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/aravindchandradoss/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/AravindChandradoss" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<!-- Text stuff -->
+
+									<h2> Sliding mode control -- in a nutshell </h2>
+									<p> &emsp; I am doing a compilation of things that I found amusing in control systems and this one is on sliding mode control. </p>
+									
+									<hr />
+									<h2> A little background... </h2>
+									<p> &emsp; Before we start, let's make sure that we all are on the same page...</p>
+									<blockquote> &emsp; Imagine you have a pendulum setup, and for some random reason, you are oscillation the pendulum at infinite frequency. What will happen to it? Take a moment and ponder, what should happen -- ideally?, and what would actually happen -- physically? <br/><br/> &emsp; Well, in reality, the pendulum would not move -- even a little. <br/> &emsp; Can you intuitively reason why that is the case? <br/><br/> &emsp; No physical system can react to infinite oscillations (rather it would react only to the resultant value of the oscillation). Take time and convince why it so... <br/> Note: you can imagine as if the real-world physical systems are having some low-pass filter at their input channel and are reacting to the signal only after filtering.</blockquote>
+									
+									<h2> From PID... to sliding mode control... </h2>
+										
+									<p> &emsp; If you are reading this means you should be at least familiar with PID based controls. Therefore, I will assume that you are comfortable with  PID controls (if not check my blog on it). To gain the intuition for sliding mode control, we will use only 'P' part of our 'PID' controller.</p>
+									<blockquote> &emsp; Imagine you have some random black box to which you can give any input and measure its output. If we are using P-Control means, we would calculate the error (i.e. desired value - measure value) and would find the control input (proportional to that error), right? <br/> <br/> &emsp; Now, imagine that you are gradually increasing the gain (ideally to infinity), what will happen? <br/> <br/> &emsp; Even for a slight positive error (infinitesimally), the controller output (a.k.a system input) would go to negative infinity. Similarly, even for a slight negative error, the controller output (a.k.a system input) would go to positive infinity. <br/> &emsp; Now, imagine what happens when we reach error value to be around zero. uh? Because of our gain, the controller output (a.k.a system input) would oscillate between positive and negative infinity. However, we know that no physical system can react to such high oscillations (but rather to the resultant value of the oscillation). If you ponder you can reason, how would this resultant values and error values, and therefore the desired values are related. Voila! This is the core idea behind Sliding Mode Control.<br/> &emsp; Loosely speaking, to get the intuition, you can imagine those high osciallations as PWM (pulse width modulated) waves -- where the resultant value would depend on the pulse width. </blockquote>
+									<p> &emsp; Just to make it clear, in practice, we would use relay control (on/off) with saturation (instead of +/- infinity) and a threshold for switching (instead of zero passing). This is mainly due to implementation constraints. However, in recent times, SLC has gain popularity in power electronics where SLC are designed to switch at megahertz.  </p>
+									<p> &emsp; To be honest, there is more a lot to reveal... For this part, I assumed the system to be a black box, but in practice, we would know some details and therefore we can design a much better sliding surface (...than a simple error equation). I will post more on it in my next blog. </p>
+
+									
+							</section>
+
+						<h2>Disqus *****</h2>
+						<div id="disqus_thread"></div>
+						<script>
+
+						/**
+						*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+						*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+						
+						var disqus_config = function () {
+						this.page.url = 'https://aravindchandradoss.github.io/blog/blog_sliding_control.html';  // Replace PAGE_URL with your page's canonical URL variable
+						this.page.identifier = 'https://aravindchandradoss.github.io/blog/blog_sliding_control.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+						};
+						(function() { // DON'T EDIT BELOW THIS LINE
+						var d = document, s = d.createElement('script');
+						s.src = 'https://aravinds-blog.disqus.com/embed.js';
+						s.setAttribute('data-timestamp', +new Date());
+						(d.head || d.body).appendChild(s);
+						})();
+						</script>
+						<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>                      
+					
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section class="split contact">
+							<!-- <section class="alt">
+								<h3>Address</h3>
+								<p>Columbus, Ohio, 43202</p>
+							</section> -->
+							<section>
+								<h3>Phone</h3>
+								<p><a href="tel:+1-614-377-4743">(614) 377-4743</a></p>
+							</section>
+							<section>
+								<h3>Email</h3>
+								<p><a href="mailto:aruldoss.1@osu.edu">aruldoss.1@osu.edu</a><br /><a href="mailto:aravinddoss@live.com">aravinddoss@live.com</a></p>
+							</section>
+							<section>
+								<h3>Social</h3>
+								<ul class="icons alt">
+									<li><a href="https://www.linkedin.com/in/aravindchandradoss/" class="icon brands fa-linkedin"><span class="label">Instagram</span></a></li>
+									<li><a href="https://github.com/AravindChandradoss" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+								</ul>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+
