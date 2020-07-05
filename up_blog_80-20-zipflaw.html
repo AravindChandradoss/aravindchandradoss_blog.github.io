@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title> Kalman Decomposition </title>
+		<title> blog title </title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -42,28 +42,17 @@
 							<section class="post">
 								<!-- Text stuff -->
 
-									<h2> Kalman decomposition... and why should we know them -- சாராம்சம்</h2>
-									<p> &emsp; In control system, kalman decomposition can become handy when we need to face systems with too many states. These decompositions can greatly help in isolating and removing the unwanted states from the system... </p>
+									<h2> blog topic -- சாராம்சம் </h2>
+									<p> &emsp;  </p>
 									
 									<hr />
 
-									<h2> A little background... </h2>
-									<p> &emsp; First let's build the intuition... and understand when and where can we use this decompostion... </p>
-									<blockquote> &emsp; For some random reason, assume that you have to drive a car (for now, also assume that someone has already modeling everything for you -- every single car, road, traffic light in the entire world -- awful!?). Having said that, imagine you are driving on the road, what things would you look for?... Most probably you will look for cars, pedestrians, traffic signs only nearby to your car, right? in other words, you won't look for cars that are on other side of the world? -- We are considering only certain nearby things to take action (i.e. certain parameter of our entire system). In addition, if we ponder a little futher, we can notice that we won't be able to control all the things that we observe (other cars or traffic lights), in other words, our control/action is even restricted (in this case, we can control only our vehicle). -- We can take this notion and interprete the same as follow, "In Control system, -- in most cases, there are only certion region that we can observe and also of that obeservable region only certain region can be controlled. And this very peculiar region which is observable and controllable is all we care -- atleast from an external stability POV." </blockquote>
-									<hr/>
-									
-									<h2> Let's see how... </h2>
-									<p> &emsp; To state formally, Kalman decomposition is a process by which one can reduce a system (say, internal system) to subsystems based on their observability and controlability -- with an aim to identify the subsystem which is both controllable and observable (say, external system). <br/> <br/> &emsp; In <i> kalman decomposition,</i> we first reduce the system into obeservable and un-observable space, and then further reduce the observable space into controlable and un-controllable space. This will result in 3 subsystems (a.k.a kalman 3-fold decomposition), namely, "un-observable", "observable & controlable" and "observable but not controlable" subsystems. Like mention ealier, we are interested only on the subsystem that is observable, as well as, controlable. Note: We can do also interchange the above steps i.e. reducing first based on controlability and then on observablility -- we will get the same subsystem (external system). Also note that, <i> kalman four-fold decomposition</i> is also possible. <br/> <br/> &emsp;  The overall notion behind kalman decomposition  <i>(minimal realization)</i> is to reduce our large system into a much handleable smaller block. </p>
-									<blockquote> &emsp; I will add the procedure/code soon. If you are familiar with matrix diagonal/jordon/connonical-form then you should be good. Feel free to use the discussion section below. </blockquote>
-									
-
-<!-- 
 									<header class="major">
 										<h2 style="text-align:center"> heading </h2>
 										<p> &emsp; ===== </p>
 									</header>
 									<blockquote> &emsp; === </blockquote>
-									<a href="#"> === </a>
+									<a href="#"> ===deleniate </a>
 									<a href="#" target="_blank"> === </a>
 									<span class="image fit"><img src="images/pic01.jpg" alt="" /></span> 
 									<u>underlined</u>
@@ -74,10 +63,9 @@
 										<p>===</p>
 									</div>
 									<pre><code> === </code></pre>
-									<hr/> -->
+									<hr/>
 
 								<!-- Lists -->
-<!-- 								
 									<h2>Lists</h2>
 									<div class="row">
 										<div class="col-6 col-12-small">
@@ -131,12 +119,12 @@
 										<dd>
 											<p> == </p>
 										</dd>
-									</dl> -->
+									</dl>
 
 								
 
 								<!-- Image -->
-									<!-- <h2>Image</h2>
+									<h2>Image</h2>
 
 									<h3>Fit</h3>
 									<span class="image fit"><img src="images/pic01.jpg" alt="" /></span>
@@ -145,9 +133,11 @@
 											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
 											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
 											<div class="col-4"><span class="image fit"><img src="images/pic04.jpg" alt="" /></span></div>
+											<!-- Break -->
 											<div class="col-4"><span class="image fit"><img src="images/pic04.jpg" alt="" /></span></div>
 											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
 											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
+											<!-- Break -->
 											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
 											<div class="col-4"><span class="image fit"><img src="images/pic04.jpg" alt="" /></span></div>
 											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
@@ -158,10 +148,11 @@
 									<p><span class="image left"><img src="images/pic08.jpg" alt="" /></span> === </p>
 									<p><span class="image right"><img src="images/pic09.jpg" alt="" /></span> === </p>
 
-									<hr /> -->
+									<hr />
 
 							</section>
 
+						<h2>Disqus *****</h2>
 						<div id="disqus_thread"></div>
 						<script>
 
@@ -170,8 +161,8 @@
 						*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 						
 						var disqus_config = function () {
-						this.page.url = 'https://aravindchandradoss.github.io/blog/blog_kalman_decomp.html';  // Replace PAGE_URL with your page's canonical URL variable
-						this.page.identifier = 'https://aravindchandradoss.github.io/blog/blog_kalman_decomp.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+						this.page.url = //'https://aravindchandradoss.github.io/blog/blog_temp.html';  // Replace PAGE_URL with your page's canonical URL variable
+						this.page.identifier = //'https://aravindchandradoss.github.io/blog/blog_temp.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 						};
 						(function() { // DON'T EDIT BELOW THIS LINE
 						var d = document, s = d.createElement('script');
