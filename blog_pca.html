@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title> PCA </title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="about_me.html" class="logo">Aravind Chandradoss</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<!-- <li><a href="index.html">This is Massively</a></li> -->
+							<li><a href="about_me.html">About Me</a></li>
+							<li class="active"><a href="index.html">Blog</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/aravindchandradoss/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/AravindChandradoss" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<!-- Text stuff -->
+
+									<h2> Principal Component Analysis (PCA) and why should we know them -- சாராம்சம்</h2>
+									<p> &emsp; PCA has wide usecase and can become handy almost everywhere... </p>
+									
+									<hr />
+
+									<h2> Little background</h2>
+									<p> &emsp; Lets start with few random examples and try to connect them at the end... say, you have high dimentional data and notice significant portion of the data is redundant and want to reduce that data to vital informaiton... or say you have two data points and want to align them... or say you want to know most common feature across the data... </p>
+
+									<p> &emsp; First, let's consider the alignment example, where we have two data cloud shown below and want to align them...</p>
+									<span class="image fit"><img src="images/pca_dataAB.png" alt="" /></span>
+									<p> &emsp; If we know which point in A is which point in B (point-to-point correspondence), then it is straightforward --- we can find translation/rotation. But, we don't know the point-to-point correspondence, how can we approach this problem? </p>
+
+									<p> &emsp; If we ponder, we can say that if we know these two vectors (as shown below) then we can find the needed transformation to align those two point clouds, right? </p>
+									<span class="image fit"><img src="images/pca_dataAB_arrow.png" alt="" /></span>
+									<h2> what are those vectors? what's special about them? </h2>
+									<blockquote> &emsp; They are the principal components of the data which are mutually perpendicular vectors pointing in directions of high variance (starting from maximum to minimum variance)  <br/> <br/>
+									In other words, PCA is a technique where we first find the principal component/vector in direction of maximum variance (or vector to which if we project all the data we would get minimum error/residue --- best-fit line/vector). Followed by finding second principal component/vector in direction of second maximum variance (which should be perpendicular to the first Principal Component). The emphasis here is, by definition, that all Principal Components are orthogonal to each other. Therefore, in the end,  we end up with principal components perpendicular to each other and pointing in the direction starting from maximum to minimum variance. </blockquote>
+									<p> &emsp; Now, if we step up to 3D, then principal components would like this... and similarly, for n-dimensional data, we would have n-prinicipal components...  </p>
+
+									<span class="image fit"><img src="images/pca_dataAB_3Darrow.png" alt="" /></span>
+									<h2> how can we find those vectors? </h2>
+									<blockquote> &emsp; We know that the principal component/vector is always pointing in direction of max variance (or vector to which the projection distance/residue of all points is minimal).  </blockquote>
+
+									<p> &emsp; To identify the vectors, we can start with an arbitrary vector and calculate project distance/error and iterate until we find the vector with minimum projection error. once we find the principal component, we can repeat the same in perpendicular plane/hyperplane to find the next principal component and so on...  </p>
+									<p> &emsp; yes, the iterative algorithm is good, but can we do better? That's where PCA comes in. <br/> <br/> &emsp;For the iterative approach, I never explicitly mention how projection error is calculated. There are lots of ways we can measure the projection error, it could be absolute distance (L1) or squared distance (L2) or whatever we want... <b> <i> but of that all, if we assume that we use square error then everything will boil down into simple eigenvalue decomposition of covariance matrix (X'*X) with each eigenvector representing the principal component while eigenvalues representing the variance of the data along the corresponding eigenvector. </i> </b> </p>
+
+
+									<blockquote> &emsp; Basically, PCA is an elegant way of fitting high-dimension elipsoid in lease-square sense. </blockquote>
+									<p> &emsp; Coming back to our initial alignment problem, once we have the principal components of both the data, we can find the needed translation and rotation matrix and align them.  </p>
+									<hr />
+									<h2> More PCA...</h2>
+									<p> &emsp; The use case of PCA doesn't just stop there... PCA is widely used in many applications, one of them is dimensionality reduction... <br/> <br/> &emsp; Say, we have a point cloud (as shown below) and want to store them. </p>
+									<span class="image fit"><img src="images/pca_dataAc.png" alt="" /></span>
+									<p>  &emsp; For this data, each data point would require two memory elements (x,y). But, do we really need to store both dimension(x,y), can we do some tricks to reduce the required storage? Yes, if you notice the points are resembling a straight line, if we could fit a line then we don't need to store all points. Just slope and intercept of line that satisfy the straight line equation is enough, right? But real world data won't be that easy and that where PCA kicks in... </p>
+
+									<blockquote> &emsp; We can use PCA to identify the principal components and can remove the dimension with minimal variance.  </blockquote>
+									<p> &emsp;  In above example we can see that even if we remove the second dimension, we are not losing much information (actual contribution of each principal components can be determined by eigenvalues of the corresponding eigenvector/principal component). </p>
+
+									<h2> Food for thoughts...</h2>
+										<p> &emsp; when we calculate covariance matrix (X'*X), there is an identity matrix in between (X'*I*X), what if we use custom metric matrix/tensor? how that would look like? </p>
+
+
+									<!-- 
+									<header class="major">
+										<h2 style="text-align:center"> heading </h2>
+										<p> &emsp; ===== </p>
+									</header>
+									<blockquote> &emsp; === </blockquote>
+									<a href="#"> === </a>
+									<br/> <br/>
+									<a href="#" target="_blank"> === </a>
+									<span class="image fit"><img src="images/pic01.jpg" alt="" /></span> 
+									<u>underlined</u>
+									<sup>superscript</sup> 
+									<sub>subscript</sub> 
+									<code>for (;;) { ... }</code>
+									<div class="box">
+										<p>===</p>
+									</div>
+									<pre><code> === </code></pre>
+									<hr/> -->
+
+								<!-- Lists -->
+									<!-- <h2>Lists</h2>
+									<div class="row">
+										<div class="col-6 col-12-small">
+
+											<h3>Unordered</h3>
+											<ul>
+												<li> == </li>
+												<li> == </li>
+											</ul>
+
+											<h3>Alternate</h3>
+											<ul class="alt">
+												<li> == </li>
+												<li> == </li>
+											</ul>
+
+										</div>
+										<div class="col-6 col-12-small">
+
+											<h3>Ordered</h3>
+											<ol>
+												<li> == </li>
+												<li> == </li>
+											</ol>
+
+											<h3>Icons</h3>
+											<ul class="icons">
+												<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+												<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+												<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+												<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+												<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+											</ul>
+											<ul class="icons alt">
+												<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+												<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+												<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+												<li><a href="#" class="icon brands alt fa-github"><span class="label">Github</span></a></li>
+												<li><a href="#" class="icon brands alt fa-dribbble"><span class="label">Dribbble</span></a></li>
+											</ul>
+
+										</div>
+									</div>
+									<h3>Definition</h3>
+									<dl>
+										<dt>Item 1</dt>
+										<dd>
+											<p> == </p>
+										</dd>
+										<dt>Item 2</dt>
+										<dd>
+											<p> == </p>
+										</dd>
+									</dl>
+ -->
+								
+
+								<!-- Image -->
+					<!-- 				<h2>Image</h2>
+
+									<h3>Fit</h3>
+									<span class="image fit"><img src="images/pic01.jpg" alt="" /></span>
+									<div class="box alt">
+										<div class="row gtr-50 gtr-uniform">
+											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="images/pic04.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="images/pic04.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="images/pic04.jpg" alt="" /></span></div>
+											<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
+										</div>
+									</div>
+
+									<h3>Left &amp; Right</h3>
+									<p><span class="image left"><img src="images/pic08.jpg" alt="" /></span> === </p>
+									<p><span class="image right"><img src="images/pic09.jpg" alt="" /></span> === </p>
+
+									<hr /> -->
+
+							</section>
+
+						<div id="disqus_thread"></div>
+						<script>
+
+						/**
+						*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+						*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+						
+						var disqus_config = function () {
+						this.page.url = //'https://aravindchandradoss.github.io/blog/blog_temp.html';  // Replace PAGE_URL with your page's canonical URL variable
+						this.page.identifier = //'https://aravindchandradoss.github.io/blog/blog_temp.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+						};
+						(function() { // DON'T EDIT BELOW THIS LINE
+						var d = document, s = d.createElement('script');
+						s.src = 'https://aravinds-blog.disqus.com/embed.js';
+						s.setAttribute('data-timestamp', +new Date());
+						(d.head || d.body).appendChild(s);
+						})();
+						</script>
+						<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>                      
+					
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section class="split contact">
+							<!-- <section class="alt">
+								<h3>Address</h3>
+								<p>Columbus, Ohio, 43202</p>
+							</section> -->
+							<section>
+								<h3>Phone</h3>
+								<p><a href="tel:+1-614-377-4743">(614) 377-4743</a></p>
+							</section>
+							<section>
+								<h3>Email</h3>
+								<p><a href="mailto:aruldoss.1@osu.edu">aruldoss.1@osu.edu</a><br /><a href="mailto:aravinddoss@live.com">aravinddoss@live.com</a></p>
+							</section>
+							<section>
+								<h3>Social</h3>
+								<ul class="icons alt">
+									<li><a href="https://www.linkedin.com/in/aravindchandradoss/" class="icon brands fa-linkedin"><span class="label">Instagram</span></a></li>
+									<li><a href="https://github.com/AravindChandradoss" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+								</ul>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+
